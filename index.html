@@ -3,22 +3,41 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <link href="index.css" type="text/css" rel="stylesheet" >
   </head>
   <body>
+    <h1 class="title">Twiddler</h1>
+    <button title="Refreshes page and removes any filters" class="upd-btn">REFRESH TWEETS</button>
+    <article class="stream"></article>
     <script>
 
       $(document).ready(function(){
-        var $body = $('body');
+        var $body = $('.stream');
         $body.html('');
-
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
-          index -= 1;
+        
+        for (var i = 0; i < streams.home.length; i++){
+          var tweet = streams.home[i];
+          var $tweet = $('<div class="tweet"><a class="user">@' + tweet.user + '</a> ・ <p class="tmsp">' + tweet.created_at + '</p><p class="msg">' + tweet.message + '</p></div>');
+          $tweet.appendTo('.stream');
         }
+
+        $("button").click(function(){
+          $(".tweet").show();
+          for (var i = 0; i < streams.home.length; i++){
+            var tweet = streams.home[i];
+            var $tweet = $('<div class="tweet"><a class="user">@' + tweet.user + '</a> ・ <p class="tmsp">' + tweet.created_at + '</p><p class="msg">' + tweet.message + '</p></div>');
+            $tweet.appendTo('.stream');         
+          }
+          $(".user").click(function(){
+            var fltrUser = $(this).text();
+            $(".tweet:not(:contains(" + fltrUser + "))").hide();
+          });
+        });
+
+        $(".user").click(function() {
+          var fltrUser = $(this).text();
+          $(".tweet:not(:contains(" + fltrUser + "))").hide();
+        });
 
       });
 
