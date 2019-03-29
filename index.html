@@ -28,13 +28,9 @@
             var $tweet = $('<div class="tweet"><a class="user">@' + tweet.user + '</a> ・ <p class="tmsp">' + tweet.created_at + '</p><p class="msg">' + tweet.message + '</p></div>');
             $tweet.appendTo('.stream');         
           }
-          $(".user").click(function(){
-            var fltrUser = $(this).text();
-            $(".tweet:not(:contains(" + fltrUser + "))").hide();
-          });
         });
 
-        $(".user").click(function() {
+        $(document).on("click",".user",function() {
           var fltrUser = $(this).text();
           $(".tweet:not(:contains(" + fltrUser + "))").hide();
         });
